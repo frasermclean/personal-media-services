@@ -18,8 +18,8 @@ services:
       - 9000:8080
       - 54321:54321
     volumes:
-      - qbittorrent-config:/config
-      - /share/data/downloads:/data/downloads
+      - /share/Config/qbittorrent:/config
+      - /share/Downloads:/data/downloads
 
 networks:
   default:
