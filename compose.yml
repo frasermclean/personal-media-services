@@ -137,6 +137,21 @@ services:
       - sabnzbd
       - jackett
 
+  # Plex media server
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VERSION=docker
+    volumes:
+      - plex-config:/config
+      - ${HOST_MEDIA}:/data/media
+      - ${HOST_BACKUP}/plex:/backup
+
 networks:
   default:
     name: pms
@@ -157,4 +172,6 @@ volumes:
   radarr-config:
     driver: local
   lidarr-config:
+    driver: local
+  plex-config:
     driver: local
