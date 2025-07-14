@@ -4,7 +4,7 @@ services:
   # qBittorrent bittorrent client
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
+    hostname: qbittorrent
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -22,7 +22,7 @@ services:
   # SABnzbd usenet downloader
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
-    container_name: sabnzbd
+    hostname: sabnzbd
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -38,7 +38,7 @@ services:
   # Jackett torrent indexer
   jackett:
     image: lscr.io/linuxserver/jackett:latest
-    container_name: jackett
+    hostname: jackett
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -52,7 +52,7 @@ services:
   # Postgres database
   postgres:
     image: postgres:14
-    container_name: postgres
+    hostname: postgres
     restart: unless-stopped
     environment:
       - POSTGRES_PASSWORD=${ADMIN_PASSWORD}
@@ -63,7 +63,6 @@ services:
   # pgAdmin web interface for Postgres
   pgadmin:
     image: dpage/pgadmin4:latest
-    container_name: pgadmin
     restart: unless-stopped
     environment:
       - PGADMIN_DEFAULT_EMAIL=${ADMIN_EMAIL}
@@ -78,13 +77,7 @@ services:
   # Sonarr TV show manager
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
-    container_name: sonarr
     restart: unless-stopped
-    depends_on:
-      - postgres
-      - qbittorrent
-      - sabnzbd
-      - jackett
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -96,17 +89,16 @@ services:
       - ${HOST_DOWNLOADS}:/data/downloads
       - ${HOST_MEDIA}/tv:/data/media/tv
       - ${HOST_BACKUP}/sonarr:/backup
-
-  # Radarr movie manager
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
-    restart: unless-stopped
     depends_on:
       - postgres
       - qbittorrent
       - sabnzbd
       - jackett
+
+  # Radarr movie manager
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    restart: unless-stopped
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -118,17 +110,16 @@ services:
       - ${HOST_DOWNLOADS}:/data/downloads
       - ${HOST_MEDIA}/movies:/data/media/movies
       - ${HOST_BACKUP}/radarr:/backup
-
-  # Lidarr music manager
-  lidarr:
-    image: lscr.io/linuxserver/lidarr:latest
-    container_name: lidarr
-    restart: unless-stopped
     depends_on:
       - postgres
       - qbittorrent
       - sabnzbd
       - jackett
+
+  # Lidarr music manager
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    restart: unless-stopped
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -140,6 +131,11 @@ services:
       - ${HOST_DOWNLOADS}:/data/downloads
       - ${HOST_MEDIA}/music:/data/media/music
       - ${HOST_BACKUP}/lidarr:/backup
+    depends_on:
+      - postgres
+      - qbittorrent
+      - sabnzbd
+      - jackett
 
 networks:
   default:
