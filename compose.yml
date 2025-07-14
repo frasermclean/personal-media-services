@@ -56,7 +56,7 @@ services:
     container_name: postgres
     restart: unless-stopped
     environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_PASSWORD=${ADMIN_PASSWORD}
       - TZ=${TZ}
     volumes:
       - postgres-data:/var/lib/postgresql/data
@@ -68,7 +68,7 @@ services:
     restart: unless-stopped
     environment:
       - PGADMIN_DEFAULT_EMAIL=${ADMIN_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+      - PGADMIN_DEFAULT_PASSWORD=${ADMIN_PASSWORD}
     ports:
       - 9003:80
     volumes:
