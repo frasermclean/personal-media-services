@@ -37,6 +37,21 @@ services:
     ports:
       - 9001:8080
 
+  # Jackett torrent indexer
+  jackett:
+    image: lscr.io/linuxserver/jackett:latest
+    container_name: jackett
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - 9002:9117
+    volumes:
+      - jackett-config:/config
+      - /share/Downloads:/data/downloads
+
 networks:
   default:
     name: pms
@@ -45,4 +60,6 @@ volumes:
   qbittorrent-config:
     driver: local
   sabnzbd-config:
+    driver: local
+  jackett-config:
     driver: local
