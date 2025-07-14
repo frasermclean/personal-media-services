@@ -76,6 +76,28 @@ services:
     depends_on:
       - postgres
 
+  # Sonarr TV show manager
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - qbittorrent
+      - sabnzbd
+      - jackett
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - 9004:8989
+    volumes:
+      - sonarr-config:/config
+      - ${HOST_DOWNLOADS}:/data/downloads
+      - ${HOST_MEDIA}/tv:/data/media/tv
+      - ${HOST_BACKUP}/sonarr:/backup
+
 networks:
   default:
     name: pms
@@ -90,4 +112,6 @@ volumes:
   postgres-data:
     driver: local
   pgadmin-data:
+    driver: local
+  sonarr-config:
     driver: local
