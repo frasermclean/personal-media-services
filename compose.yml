@@ -119,6 +119,28 @@ services:
       - ${HOST_MEDIA}/movies:/data/media/movies
       - ${HOST_BACKUP}/radarr:/backup
 
+  # Lidarr music manager
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - qbittorrent
+      - sabnzbd
+      - jackett
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - 9006:8686
+    volumes:
+      - lidarr-config:/config
+      - ${HOST_DOWNLOADS}:/data/downloads
+      - ${HOST_MEDIA}/music:/data/media/music
+      - ${HOST_BACKUP}/lidarr:/backup
+
 networks:
   default:
     name: pms
@@ -137,4 +159,6 @@ volumes:
   sonarr-config:
     driver: local
   radarr-config:
+    driver: local
+  lidarr-config:
     driver: local
