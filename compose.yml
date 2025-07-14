@@ -21,10 +21,28 @@ services:
       - qbittorrent-config:/config
       - /share/Downloads:/data/downloads
 
+  # SABnzbd usenet downloader
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - sabnzbd-config:/config
+      - /share/Downloads:/data/downloads
+      - /share/Backup/sabnzbd:/backup
+    ports:
+      - 9001:8080
+
 networks:
   default:
     name: pms
 
 volumes:
   qbittorrent-config:
+    driver: local
+  sabnzbd-config:
     driver: local
