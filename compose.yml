@@ -12,10 +12,10 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - WEBUI_PORT=8080
+      - WEBUI_PORT=9000
       - TORRENTING_PORT=54321
     ports:
-      - 9000:8080
+      - 9000:9000
       - 54321:54321
     volumes:
       - qbittorrent-config:/config
