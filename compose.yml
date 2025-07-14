@@ -17,7 +17,7 @@ services:
       - 54321:54321
     volumes:
       - qbittorrent-config:/config
-      - /share/Downloads:/data/downloads
+      - ${HOST_DOWNLOADS}:/data/downloads
 
   # SABnzbd usenet downloader
   sabnzbd:
@@ -30,8 +30,8 @@ services:
       - TZ=${TZ}
     volumes:
       - sabnzbd-config:/config
-      - /share/Downloads:/data/downloads
-      - /share/Backup/sabnzbd:/backup
+      - ${HOST_DOWNLOADS}:/data/downloads
+      - ${HOST_BACKUP}/sabnzbd:/backup
     ports:
       - 9001:8080
 
@@ -48,7 +48,6 @@ services:
       - 9002:9117
     volumes:
       - jackett-config:/config
-      - /share/Downloads:/data/downloads
 
   # Postgres database
   postgres:
