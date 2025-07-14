@@ -50,6 +50,32 @@ services:
       - jackett-config:/config
       - /share/Downloads:/data/downloads
 
+  # Postgres database
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - TZ=${TZ}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  # pgAdmin web interface for Postgres
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${ADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    ports:
+      - 9003:80
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
 networks:
   default:
     name: pms
@@ -60,4 +86,8 @@ volumes:
   sabnzbd-config:
     driver: local
   jackett-config:
+    driver: local
+  postgres-data:
+    driver: local
+  pgadmin-data:
     driver: local
