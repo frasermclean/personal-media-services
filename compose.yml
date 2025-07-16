@@ -10,10 +10,10 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - WEBUI_PORT=9000
+      - WEBUI_PORT=8600
       - TORRENTING_PORT=54321
     ports:
-      - 9000:9000
+      - 8600:8600
       - 54321:54321
     volumes:
       - qbittorrent-config:/config
@@ -33,7 +33,7 @@ services:
       - ${HOST_DOWNLOADS}:/data/downloads
       - ${HOST_BACKUP}/sabnzbd:/backup
     ports:
-      - 9001:8080
+      - 8601:8080
 
   # Jackett torrent indexer
   jackett:
@@ -45,7 +45,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     ports:
-      - 9002:9117
+      - 8602:9117
     volumes:
       - jackett-config:/config
 
@@ -68,7 +68,7 @@ services:
       - PGADMIN_DEFAULT_EMAIL=${ADMIN_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${ADMIN_PASSWORD}
     ports:
-      - 9003:80
+      - 8603:80
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
@@ -83,7 +83,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     ports:
-      - 9004:8989
+      - 8604:8989
     volumes:
       - sonarr-config:/config
       - ${HOST_DOWNLOADS}:/data/downloads
@@ -104,7 +104,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     ports:
-      - 9005:7878
+      - 8605:7878
     volumes:
       - radarr-config:/config
       - ${HOST_DOWNLOADS}:/data/downloads
@@ -125,7 +125,7 @@ services:
       - PGID=${PGID}
       - TZ=${TZ}
     ports:
-      - 9006:8686
+      - 8606:8686
     volumes:
       - lidarr-config:/config
       - ${HOST_DOWNLOADS}:/data/downloads
