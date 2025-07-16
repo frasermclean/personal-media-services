@@ -32,8 +32,12 @@ services:
       - sabnzbd-config:/config
       - ${HOST_DOWNLOADS}:/data/downloads
       - ${HOST_BACKUP}/sabnzbd:/backup
-    ports:
-      - 8601:8080
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sabnzbd.rule=Host(`sabnzbd.${DOMAIN}`)
+      - traefik.http.routers.sabnzbd.entrypoints=websecure
+      - traefik.http.routers.sabnzbd.tls.certresolver=cfdnsresolver
+      - traefik.http.services.sabnzbd.loadbalancer.server.port=8080
 
   # Jackett torrent indexer
   jackett:
