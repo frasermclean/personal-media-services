@@ -168,6 +168,20 @@ services:
       - ${HOST_MEDIA}:/data/media
       - ${HOST_BACKUP}/plex:/backup
 
+  # Traefik reverse proxy
+  traefik:
+    image: traefik:v3.4
+    restart: unless-stopped
+    environment:
+      - TRAEFIK_API_INSECURE=true
+      - TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT=false
+    ports:
+      - 7000:8080 # Dashboard
+      - 7080:80 # HTTP
+      - 7443:443 # HTTPS
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
 networks:
   default:
     name: pms
