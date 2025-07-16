@@ -10,14 +10,18 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - WEBUI_PORT=8600
       - TORRENTING_PORT=54321
     ports:
-      - 8600:8600
       - 54321:54321
     volumes:
       - qbittorrent-config:/config
       - ${HOST_DOWNLOADS}:/data/downloads
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.${DOMAIN}`)
+      - traefik.http.routers.qbittorrent.entrypoints=websecure
+      - traefik.http.routers.qbittorrent.tls.certresolver=cfdnsresolver
+      - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
 
   # SABnzbd usenet downloader
   sabnzbd:
