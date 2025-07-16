@@ -158,11 +158,12 @@ services:
     restart: unless-stopped
     environment:
       - TRAEFIK_API_INSECURE=true
+      - TRAEFIK_ENTRYPOINTS_TRAEFIK_ADDRESS=:7000
       - TRAEFIK_ENTRYPOINTS_WEB_ADDRESS=:7080
       - TRAEFIK_ENTRYPOINTS_WEBSECURE_ADDRESS=:7443
       - TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT=false
     ports:
-      - 7000:8080 # Dashboard
+      - 7000:7000 # Dashboard
       - 7080:7080 # HTTP
       - 7443:7443 # HTTPS
     volumes:
