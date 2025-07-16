@@ -162,12 +162,17 @@ services:
       - TRAEFIK_ENTRYPOINTS_WEB_ADDRESS=:7080
       - TRAEFIK_ENTRYPOINTS_WEBSECURE_ADDRESS=:7443
       - TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT=false
+      - TRAEFIK_CERTIFICATESRESOLVERS_CFDNSRESOLVER_ACME_DNSCHALLENGE_PROVIDER=cloudflare
+      - TRAEFIK_CERTIFICATESRESOLVERS_CFDNSRESOLVER_ACME_EMAIL=${ADMIN_EMAIL}
+      - TRAEFIK_CERTIFICATESRESOLVERS_CFDNSRESOLVER_ACME_STORAGE=/certs/acme.json
+      - CLOUDFLARE_DNS_API_TOKEN=${CLOUDFLARE_DNS_API_TOKEN}
     ports:
       - 7000:7000 # Dashboard
       - 7080:7080 # HTTP
       - 7443:7443 # HTTPS
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-certs:/certs
 
 networks:
   default:
@@ -191,4 +196,6 @@ volumes:
   lidarr-config:
     driver: local
   plex-config:
+    driver: local
+  traefik-certs:
     driver: local
