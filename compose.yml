@@ -74,6 +74,22 @@ services:
     depends_on:
       - postgres
 
+  # Prowlarr indexer manager
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    ports:
+      - 8607:9696
+    volumes:
+      - prowlarr-config:/config
+    depends_on:
+      - qbittorrent
+      - sabnzbd
+
   # Sonarr TV show manager
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
@@ -166,6 +182,8 @@ volumes:
   postgres-data:
     driver: local
   pgadmin-data:
+    driver: local
+  prowlarr-config:
     driver: local
   sonarr-config:
     driver: local
