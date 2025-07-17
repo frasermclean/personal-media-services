@@ -52,10 +52,13 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-    ports:
-      - 8602:9117
     volumes:
       - jackett-config:/config
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.jackett.rule=Host(`jackett.${DOMAIN}`)
+      - traefik.http.routers.jackett.entrypoints=websecure
+      - traefik.http.routers.jackett.tls.certresolver=cloudflare
 
   # Postgres database
   postgres:
@@ -81,6 +84,11 @@ services:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.pgadmin.rule=Host(`pgadmin.${DOMAIN}`)
+      - traefik.http.routers.pgadmin.entrypoints=websecure
+      - traefik.http.routers.pgadmin.tls.certresolver=cloudflare
 
   # Sonarr TV show manager
   sonarr:
