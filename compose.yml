@@ -98,8 +98,6 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-    ports:
-      - 8604:8989
     volumes:
       - sonarr-config:/config
       - ${HOST_DOWNLOADS}:/data/downloads
@@ -110,6 +108,11 @@ services:
       - qbittorrent
       - sabnzbd
       - jackett
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN}`)
+      - traefik.http.routers.sonarr.entrypoints=websecure
+      - traefik.http.routers.sonarr.tls.certresolver=cloudflare
 
   # Radarr movie manager
   radarr:
@@ -119,8 +122,6 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-    ports:
-      - 8605:7878
     volumes:
       - radarr-config:/config
       - ${HOST_DOWNLOADS}:/data/downloads
@@ -131,6 +132,11 @@ services:
       - qbittorrent
       - sabnzbd
       - jackett
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN}`)
+      - traefik.http.routers.radarr.entrypoints=websecure
+      - traefik.http.routers.radarr.tls.certresolver=cloudflare
 
   # Lidarr music manager
   lidarr:
@@ -140,8 +146,6 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-    ports:
-      - 8606:8686
     volumes:
       - lidarr-config:/config
       - ${HOST_DOWNLOADS}:/data/downloads
@@ -152,6 +156,11 @@ services:
       - qbittorrent
       - sabnzbd
       - jackett
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.lidarr.rule=Host(`lidarr.${DOMAIN}`)
+      - traefik.http.routers.lidarr.entrypoints=websecure
+      - traefik.http.routers.lidarr.tls.certresolver=cloudflare
 
   # Plex media server
   plex:
