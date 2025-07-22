@@ -160,6 +160,26 @@ services:
       - traefik.http.routers.lidarr.entrypoints=websecure
       - traefik.http.routers.lidarr.tls.certresolver=cloudflare
 
+  # Prowlarr indexer manager
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    restart: unless-stopped
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - prowlarr-config:/config
+    depends_on:
+      - sonarr
+      - radarr
+      - lidarr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.prowlarr.rule=Host(`prowlarr.${DOMAIN}`)
+      - traefik.http.routers.prowlarr.entrypoints=websecure
+      - traefik.http.routers.prowlarr.tls.certresolver=cloudflare
+
   # Plex media server
   plex:
     image: lscr.io/linuxserver/plex:latest
@@ -218,6 +238,8 @@ volumes:
   radarr-config:
     driver: local
   lidarr-config:
+    driver: local
+  prowlarr-config:
     driver: local
   plex-config:
     driver: local
