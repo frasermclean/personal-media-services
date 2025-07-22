@@ -166,6 +166,7 @@ services:
   # Prowlarr indexer manager
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
+    hostname: prowlarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
