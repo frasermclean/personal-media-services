@@ -89,7 +89,6 @@ services:
       - postgres
       - qbittorrent
       - sabnzbd
-      - jackett
     labels:
       - traefik.enable=true
       - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN}`)
@@ -114,7 +113,6 @@ services:
       - postgres
       - qbittorrent
       - sabnzbd
-      - jackett
     labels:
       - traefik.enable=true
       - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN}`)
@@ -139,7 +137,6 @@ services:
       - postgres
       - qbittorrent
       - sabnzbd
-      - jackett
     labels:
       - traefik.enable=true
       - traefik.http.routers.lidarr.rule=Host(`lidarr.${DOMAIN}`)
@@ -158,9 +155,7 @@ services:
     volumes:
       - prowlarr-config:/config
     depends_on:
-      - sonarr
-      - radarr
-      - lidarr
+      - postgres
     labels:
       - traefik.enable=true
       - traefik.http.routers.prowlarr.rule=Host(`prowlarr.${DOMAIN}`)
