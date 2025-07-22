@@ -91,6 +91,7 @@ services:
   # Sonarr TV show manager
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
+    hostname: sonarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -115,6 +116,7 @@ services:
   # Radarr movie manager
   radarr:
     image: lscr.io/linuxserver/radarr:latest
+    hostname: radarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -139,6 +141,7 @@ services:
   # Lidarr music manager
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
+    hostname: lidarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
