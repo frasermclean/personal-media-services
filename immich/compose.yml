@@ -41,8 +41,10 @@ services:
     depends_on:
       - database
       - cache
-    healthcheck:
-      disable: false
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.prowlarr.rule=Host(`immich.${DOMAIN}`)
+      - traefik.http.routers.prowlarr.tls.certresolver=cloudflare
 
   # Immich machine learning service
   machine-learning:
