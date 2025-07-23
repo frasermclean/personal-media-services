@@ -19,7 +19,6 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.${DOMAIN}`)
-      - traefik.http.routers.qbittorrent.entrypoints=websecure
       - traefik.http.routers.qbittorrent.tls.certresolver=cloudflare
       - traefik.http.services.qbittorrent.loadbalancer.server.port=8080
 
@@ -39,7 +38,6 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.sabnzbd.rule=Host(`sabnzbd.${DOMAIN}`)
-      - traefik.http.routers.sabnzbd.entrypoints=websecure
       - traefik.http.routers.sabnzbd.tls.certresolver=cloudflare
       - traefik.http.services.sabnzbd.loadbalancer.server.port=8080
 
@@ -68,7 +66,6 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.pgadmin.rule=Host(`pgadmin.${DOMAIN}`)
-      - traefik.http.routers.pgadmin.entrypoints=websecure
       - traefik.http.routers.pgadmin.tls.certresolver=cloudflare
 
   # Sonarr TV show manager
@@ -92,7 +89,6 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.sonarr.rule=Host(`sonarr.${DOMAIN}`)
-      - traefik.http.routers.sonarr.entrypoints=websecure
       - traefik.http.routers.sonarr.tls.certresolver=cloudflare
 
   # Radarr movie manager
@@ -116,7 +112,6 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.radarr.rule=Host(`radarr.${DOMAIN}`)
-      - traefik.http.routers.radarr.entrypoints=websecure
       - traefik.http.routers.radarr.tls.certresolver=cloudflare
 
   # Lidarr music manager
@@ -140,7 +135,6 @@ services:
     labels:
       - traefik.enable=true
       - traefik.http.routers.lidarr.rule=Host(`lidarr.${DOMAIN}`)
-      - traefik.http.routers.lidarr.entrypoints=websecure
       - traefik.http.routers.lidarr.tls.certresolver=cloudflare
 
   # Prowlarr indexer manager
@@ -198,6 +192,4 @@ volumes:
   prowlarr-config:
     driver: local
   plex-config:
-    driver: local
-  traefik-certs:
     driver: local
