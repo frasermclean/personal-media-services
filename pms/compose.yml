@@ -4,7 +4,6 @@ services:
   # qBittorrent bittorrent client
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
-    hostname: qbittorrent
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -25,7 +24,6 @@ services:
   # SABnzbd usenet downloader
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest
-    hostname: sabnzbd
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -44,7 +42,6 @@ services:
   # Postgres database
   postgres:
     image: postgres:14
-    hostname: postgres
     restart: unless-stopped
     environment:
       - POSTGRES_PASSWORD=${ADMIN_PASSWORD}
@@ -71,7 +68,6 @@ services:
   # Sonarr TV show manager
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
-    hostname: sonarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -94,7 +90,6 @@ services:
   # Radarr movie manager
   radarr:
     image: lscr.io/linuxserver/radarr:latest
-    hostname: radarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -117,7 +112,6 @@ services:
   # Lidarr music manager
   lidarr:
     image: lscr.io/linuxserver/lidarr:latest
-    hostname: lidarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -140,7 +134,6 @@ services:
   # Prowlarr indexer manager
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:latest
-    hostname: prowlarr
     restart: unless-stopped
     environment:
       - PUID=${PUID}
