@@ -24,6 +24,16 @@ services:
       - 7000:7000 # Dashboard
       - 80:80 # HTTP
       - 443:443 # HTTPS
+    networks:
+      - pms
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - traefik-certs:/certs
+
+networks:
+  pms:
+    external: true
+
+volumes:
+  traefik-certs:
+    driver: local
