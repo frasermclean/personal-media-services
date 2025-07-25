@@ -33,8 +33,6 @@ services:
       - DB_PASSWORD=${POSTGRES_PASSWORD}
       - DB_DATABASE_NAME=${POSTGRES_DB}
       - REDIS_HOSTNAME=cache
-    ports:
-      - 2283:2283
     volumes:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
